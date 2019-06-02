@@ -2,7 +2,8 @@
 title: ${cursor}
 description:
 slug:
-author:
+tags:
+author: ${author}
 date: ${timestamp}
 ---
 

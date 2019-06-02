@@ -39,9 +39,10 @@ function promptAndSave(args: any, templatetype: string) {
 
       filepath = correctExtension(filepath)
 
-      const templatePath =
+      const extensionTemplate =
         vscode.extensions.getExtension('timdeschryver.new-blog-post')!
           .extensionPath + '/templates/post.template'
+      const templatePath = getSetting('template', extensionTemplate)
 
       vscode.workspace
         .openTextDocument(templatePath)
@@ -49,6 +50,7 @@ function promptAndSave(args: any, templatetype: string) {
           let text = doc.getText()
           text = text.replace('${timestamp}', new Date().toISOString())
           text = text.replace('${motivate}', motivate())
+          text = text.replace('${author}', getSetting('author', ''))
 
           let cursorPosition = findCursorInTemlpate(text)
           text = text.replace('${cursor}', '')
@@ -71,9 +73,12 @@ function promptAndSave(args: any, templatetype: string) {
 function findCursorInTemlpate(text: string) {
   let cursorPos = text.indexOf('${cursor}')
   let preCursor = text.substr(0, cursorPos)
-  let lineNum = preCursor.match(/\n/gi)!.length
+  let lineNum = preCursor.match(/\n/gi)
+  if (!lineNum) {
+    return new vscode.Position(0, 0)
+  }
   let charNum = preCursor.substr(preCursor.lastIndexOf('\n')).length
-  return new vscode.Position(lineNum, charNum)
+  return new vscode.Position(lineNum.length, charNum)
 }
 
 function correctExtension(filename: string, extension = 'md') {
@@ -104,5 +109,11 @@ function motivate() {
   return quotes[Math.floor(Math.random() * quotes.length)]
 }
 
+function getSetting(key: string, defaultValue: string) {
+  return vscode.workspace
+    .getConfiguration('post')
+    .get(key, defaultValue)
+}
+
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
