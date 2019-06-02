@@ -41,7 +41,7 @@ function promptAndSave(args: any, templatetype: string) {
 
       const templatePath =
         vscode.extensions.getExtension('timdeschryver.new-blog-post')!
-          .extensionPath + '/src/templates/post.template'
+          .extensionPath + '/templates/post.template'
 
       vscode.workspace
         .openTextDocument(templatePath)
