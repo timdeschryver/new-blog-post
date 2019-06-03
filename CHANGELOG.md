@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.4
+
+feat: add dev.to template
+
 ## 0.0.3
 
 feat: add author setting

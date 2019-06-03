@@ -39,11 +39,7 @@ function promptAndSave(args: any, templatetype: string) {
 
       filepath = correctExtension(filepath)
 
-      const extensionTemplate =
-        vscode.extensions.getExtension('timdeschryver.new-blog-post')!
-          .extensionPath + '/templates/post.template'
-      const templatePath = getSetting('template', extensionTemplate)
-
+      const templatePath = getTemplate()
       vscode.workspace
         .openTextDocument(templatePath)
         .then((doc: vscode.TextDocument) => {
@@ -110,10 +106,26 @@ function motivate() {
 }
 
 function getSetting(key: string, defaultValue: string) {
-  return vscode.workspace
-    .getConfiguration('post')
-    .get(key, defaultValue)
+  return vscode.workspace.getConfiguration('post').get(key, defaultValue)
+}
+
+function getTemplate() {
+  const extensionPath = vscode.extensions.getExtension(
+    'timdeschryver.new-blog-post',
+  )!.extensionPath
+  const extensionTemplate = (name: string) =>
+    extensionPath + `/templates/${name}.template`
+  const template = getSetting('template', '')
+
+  if (template === '' || template === 'default') {
+    return extensionTemplate('default')
+  }
+  if (template === 'dev.to') {
+    return extensionTemplate('devto')
+  }
+
+  return template
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() { }
+export function deactivate() {}
