@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.5
+
+feat: add custom variables
+
 ## 0.0.4
 
 feat: add dev.to template

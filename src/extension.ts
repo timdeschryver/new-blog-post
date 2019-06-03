@@ -44,9 +44,7 @@ function promptAndSave(args: any, templatetype: string) {
         .openTextDocument(templatePath)
         .then((doc: vscode.TextDocument) => {
           let text = doc.getText()
-          text = text.replace('${timestamp}', new Date().toISOString())
-          text = text.replace('${motivate}', motivate())
-          text = text.replace('${author}', getSetting('author', ''))
+          text = fillInTextParams(text)
 
           let cursorPosition = findCursorInTemlpate(text)
           text = text.replace('${cursor}', '')
@@ -86,6 +84,30 @@ function correctExtension(filename: string, extension = 'md') {
     }
   }
   return filename
+}
+
+function fillInTextParams(text: string) {
+  const defaults = {
+    timestamp: 'new Date().toISOString()',
+    motivate: 'motivate()',
+  }
+
+  try {
+    const variablesSetting = JSON.stringify(
+      getSetting('templateVariables', '{}'),
+    )
+    const variables = JSON.parse(variablesSetting)
+
+    Object.entries({ ...defaults, ...variables }).forEach(
+      ([key, value]: any[]) => {
+        text = text.replace(`\${${key}}`, eval(value))
+      },
+    )
+  } catch (err) {
+    console.error(err)
+  }
+
+  return text
 }
 
 function motivate() {

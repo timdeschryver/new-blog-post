@@ -12,19 +12,35 @@
 
 ## Settings
 
-| Property        | Description                                                                               |
-| --------------- | ----------------------------------------------------------------------------------------- |
-| `post.author`   | The author of the post, will be used to override the `${author}` variable in the template |
-| `post.template` | Can have the values: `default`, `dev.to`, or an obsolete path to your own template        |
+| Property                 | Description                                                                        |
+| ------------------------ | ---------------------------------------------------------------------------------- |
+| `post.template`          | Can have the values: `default`, `dev.to`, or an obsolete path to your own template |
+| `post.templateVariables` | Define your own template, [more info](#Template-Variables)                         |
 
 ## Template variables
 
+### Define custom variables
+
+You can define your own variables with the `templateVariables` variable, which is an object.
+
+The key will be used to find the variable tag. To create a variable tag in the template surround it with `${}`, for example `${author}`.
+
+The value will be evaluated with the `eval` function. This has the advantage that we have the possibility to define "dynamic" variables, but has as disadvantage that simple string values have to be surrounded with quotes.
+
+```json
+"post.templateVariables": {
+  "author": "'Tim Deschryver'",
+  "timestamp": "new Date().toISOString()"
+}
+```
+
+### Predefined template variables
+
 | Variable       | Value                                                           |
 | -------------- | --------------------------------------------------------------- |
-| `${author}`    | The value defined in `post.author`, blanco if left empty        |
 | `${timestamp}` | The current timestamp in ISO format, `2019-06-02T19:03:43.412Z` |
-| `${cursor}`    | Where the cursor will be at after creating the file             |
 | `${motivate}`  | A motivational text                                             |
+| `${cursor}`    | Where the cursor will be at after creating the file             |
 
 ## Default template
 
