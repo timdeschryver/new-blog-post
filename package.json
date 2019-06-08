@@ -13,6 +13,10 @@
     "Other"
   ],
   "icon": "other/memo.png",
+  "galleryBanner": {
+    "color": "#efd403",
+    "theme": "dark"
+  },
   "license": "MIT",
   "homepage": "https://github.com/timdeschryver/new-blog-post#readme",
   "repository": {
@@ -22,19 +26,24 @@
   "bugs": {
     "url": "https://github.com/timdeschryver/new-blog-post/issues"
   },
-  "version": "0.0.5",
+  "version": "0.0.6",
   "engines": {
     "vscode": "^1.34.0"
   },
   "activationEvents": [
-    "onCommand:extension.newBlogPost"
+    "onCommand:extension.newBlogPost",
+    "onCommand:extension.publishToDevTo"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "extension.newBlogPost",
-        "title": " 📝 New Blog Post"
+        "title": "📝 New Blog Post"
+      },
+      {
+        "command": "extension.publishToDevTo",
+        "title": "🚀 Publish to dev.to"
       }
     ],
     "menus": {
@@ -44,6 +53,27 @@
           "command": "extension.newBlogPost"
         }
       ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "📝 New Blog Post configuration",
+      "properties": {
+        "post.template": {
+          "type": "string",
+          "default": "dev.to",
+          "description": "The template to use, can be 'dev.to' or or an obsolete path to your own template."
+        },
+        "post.publishToken": {
+          "type": "string",
+          "default": "",
+          "description": "Token to use when publishing to dev.to."
+        },
+        "post.templateVariables": {
+          "type": "object",
+          "default": {},
+          "description": "User defined template variables to override in the template. The key will be used to find the variable tag. To create a variable tag in the template surround it with `${}`, for example `${author}`.       The value will be evaluated with the `eval` function."
+        }
+      }
     }
   },
   "scripts": {
@@ -56,8 +86,13 @@
   "devDependencies": {
     "@types/mocha": "^2.2.42",
     "@types/node": "^10.12.21",
+    "@types/node-fetch": "^2.3.4",
     "tslint": "^5.12.1",
     "typescript": "^3.3.1",
     "vscode": "^1.1.28"
+  },
+  "dependencies": {
+    "front-matter": "^3.0.2",
+    "node-fetch": "^2.6.0"
   }
 }

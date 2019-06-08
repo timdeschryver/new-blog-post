@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.6
+
+feat: publish to dev.to
+
 ## 0.0.5
 
 feat: add custom variables

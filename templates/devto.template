@@ -1,9 +1,12 @@
 ---
 title: ${cursor}
-published: false
+published: ${published}
 description: 
-tags: 
+tags: ${tags}
 cover_image:
 canonical_url:
 ---
 
+# Post title
+
+Post body

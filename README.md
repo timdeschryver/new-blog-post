@@ -6,16 +6,18 @@
 
 ## Commands
 
-| Command         | Description                                   |
-| --------------- | --------------------------------------------- |
-| 📝New Blog Post | Creates a markdown file based on the template |
+| Command              | Description                                         |
+| -------------------- | --------------------------------------------------- |
+| 📝 New Blog Post     | Creates a markdown file based on the template       |
+| 🚀 Publish to dev.to | Publishes the blog post to [dev.to](https://dev.to) |
 
 ## Settings
 
-| Property                 | Description                                                                        |
-| ------------------------ | ---------------------------------------------------------------------------------- |
-| `post.template`          | Can have the values: `default`, `dev.to`, or an obsolete path to your own template |
-| `post.templateVariables` | Define your own template, [more info](#Template-Variables)                         |
+| Property                 | Description                                                                             |
+| ------------------------ | --------------------------------------------------------------------------------------- |
+| `post.template`          | Can have the values: `dev.to`, or an obsolete path to your own template                 |
+| `post.templateVariables` | Define your own template, [more info](#Template-Variables)                              |
+| `post.publishToken`      | Token to publish to dev.to, the token can be created at https://dev.to/settings/account |
 
 ## Template variables
 
@@ -39,24 +41,25 @@ The value will be evaluated with the `eval` function. This has the advantage tha
 | Variable       | Value                                                           |
 | -------------- | --------------------------------------------------------------- |
 | `${timestamp}` | The current timestamp in ISO format, `2019-06-02T19:03:43.412Z` |
-| `${motivate}`  | A motivational text                                             |
+| `${published}` | `false`                                                         |
+| `${tags}`      | Empty                                                           |
 | `${cursor}`    | Where the cursor will be at after creating the file             |
 
-## Default template
+## Default template: dev.to
 
-The default template looks as follows:
+The default template that will be used, is the `dev.to` template and looks as:
 
 ```md
 ---
-title:
-description:
-slug:
-tags:
-author: ${author}
-date: ${timestamp}
+title: 
+published: false
+description: 
+tags: 
+cover_image:
+canonical_url:
 ---
 
-## Header
+# Post title
 
-\${motivate}
+Post body
 ```
